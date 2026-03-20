@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: pypi-stats-${{ github.ref }}
@@ -25,20 +25,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Choose target branch
-        id: branch
-        run: |
-          if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "target=develop" >> "$GITHUB_OUTPUT"
-          else
-            echo "target=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Check out target branch
+      - name: Check out repository
         uses: actions/checkout@v4
-        with:
-          ref: ${{ steps.branch.outputs.target }}
-          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -53,12 +41,12 @@ jobs:
       - name: Generate report
         run: python scripts/pypi_stats.py
 
-      - name: Commit updated report if changed
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add stats/pypi_downloads.md
-          git diff --cached --quiet || git commit -m "Update PyPI stats report"
+      - name: Show report
+        run: cat stats/pypi_downloads.md
 
-      - name: Push changes
-        run: git push origin HEAD:${{ steps.branch.outputs.target }}
+      - name: Upload report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pypi-download-stats
+          path: stats/pypi_downloads.md
+          
