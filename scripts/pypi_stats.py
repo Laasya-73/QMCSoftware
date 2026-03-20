@@ -137,7 +137,7 @@ def build_one_liner(
     if start_date and end_date:
         return (
             f"Over {format_int(overall_total)} downloads from {start_date} to {end_date} "
-            f"(PyPI, including automated installs).\n"
+            f"(PyPI, including automated installs)\n"
         )
     return (
         f"Over {format_int(overall_total)} recent downloads "
