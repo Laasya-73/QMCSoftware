@@ -141,7 +141,7 @@ def build_one_liner(
         )
     return (
         f"Over {format_int(overall_total)} recent downloads "
-        f"(PyPI, including automated installs).\n"
+        f"(PyPI, including automated installs)\n"
     )
 
 
