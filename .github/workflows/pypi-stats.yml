@@ -1,9 +1,11 @@
-name: PyPI stats
+name: PyPI stats  # generates download metrics; commits results for stable links
 
 on:
   push:
     branches:
       - develop
+      - master
+    # run on develop (testing) and master (canonical/public)
     paths:
       - ".github/workflows/pypi-stats.yml"
       - "scripts/pypi_stats.py"
@@ -14,7 +16,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write  # needed to commit generated files
 
 concurrency:
   group: pypi-stats-${{ github.ref }}
@@ -38,18 +40,24 @@ jobs:
           python -m pip install --upgrade pip
           pip install pypistats
 
-      - name: Generate report
-        run: python scripts/pypi_stats.py
+      - name: Generate stats files
+        run: |
+          python scripts/pypi_stats.py
 
-      - name: Show report
-        run: cat stats/pypi_downloads.md
+      - name: Commit updated stats files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add stats/pypi_downloads.md stats/pypi_impact_one_liner.md stats/pypi_impact_one_liner.txt
+          git diff --cached --quiet || git commit -m "Update PyPI stats"
+          git push
 
       - name: Upload report artifact
         uses: actions/upload-artifact@v4
         with:
           name: pypi-download-stats
+          # Artifacts also kept for inspection
           path: |
             stats/pypi_downloads.md
             stats/pypi_impact_one_liner.md
             stats/pypi_impact_one_liner.txt
-          
