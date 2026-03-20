@@ -48,5 +48,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: pypi-download-stats
-          path: stats/pypi_downloads.md
+          path: |
+            stats/pypi_downloads.md
+            stats/pypi_impact_one_liner.md
+            stats/pypi_impact_one_liner.txt
           
