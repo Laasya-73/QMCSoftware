@@ -188,7 +188,7 @@ class Kronecker(AbstractLDDiscreteDistribution):
                [0.18920712, 0.41421356, 0.68179283],
                [0.37841423, 0.82842712, 0.36358566],
                [0.56762135, 0.24264069, 0.04537849]])
-        >>> Kronecker(3,generating_vector=2**(np.arange(1,4)/(3 + 1)),randomize="SHIFT",replications=2)(4)
+        >>> Kronecker(3,generating_vector=2**(np.arange(1,4)/(3 + 1)),randomize="SHIFT",replications=2,seed=7)(4)
         array([[[0.5524826 , 0.47815647, 0.76106193],
                 [0.74168971, 0.89237003, 0.44285476],
                 [0.93089683, 0.30658359, 0.12464759],
