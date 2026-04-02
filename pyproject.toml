@@ -49,7 +49,7 @@ requires-python = ">= 3.5"
 dependencies = [
     "numpy >= 1.17.0",
     "scipy >= 1.1.0",
-    "qmctoolscl >= 1.1.6",
+    "qmctoolscl >= 1.2.1",
     ]
 
 [project.optional-dependencies]
@@ -150,8 +150,6 @@ class = [
 run-setuptools = true
 includes = [
     "qmcpy",
-    "qmcpy/discrete_distribution/_c_lib/*.h",
-    "qmcpy/discrete_distribution/_c_lib/*.c",
     "qmcpy/discrete_distribution/digital_net_b2/generating_matrices/*.npy",
     "qmcpy/discrete_distribution/lattice/generating_vectors/*.npy",
     "qmcpy/util/qmcpy.mplstyle",

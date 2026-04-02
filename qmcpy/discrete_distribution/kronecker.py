@@ -114,9 +114,9 @@ class Kronecker(AbstractLDDiscreteDistribution):
         
         Switch from CBC to Richtmyer generating vector when the dimension is too large.
 
-        >>> Kronecker(15,seed=7)(4).shape
+        >>> Kronecker(15,seed=7,warn=False)(4).shape
         (4, 15)
-        >>> Kronecker(15,replications=2,seed=7)(4).shape
+        >>> Kronecker(15,replications=2,seed=7,warn=False)(4).shape
         (2, 4, 15)
 
         CBC unrandomized 
@@ -222,6 +222,7 @@ class Kronecker(AbstractLDDiscreteDistribution):
         randomize="SHIFT", 
         generating_vector="CBC", 
         shift=None,
+        warn=True,
     ):
         r"""
         Args:
@@ -245,6 +246,7 @@ class Kronecker(AbstractLDDiscreteDistribution):
                 - np.array: user-specified generating vector.
 
             shift (np.ndarray): Shift vector $\boldsymbol{\delta}$. If `randomize=True`, this is ignored and a random shift is generated. Otherwise, a fixed shift is used.
+            warn (bool): If False, suppress warnings during construction 
         """
         self.parameters = ["randomize", "gen_vec_source"]
         self.input_generating_vector = generating_vector
@@ -270,10 +272,11 @@ class Kronecker(AbstractLDDiscreteDistribution):
                 3.216346950830996643e-01], dtype=np.float64)
             gen_vec = CBC
             if not (self.dvec.max() < len(gen_vec)):
-                warnings.warn(
-                    f"CBC generating vector only supports dimension <= {len(CBC)}; falling back to Richtmyer.",
-                    RuntimeWarning,
-                )
+                if warn:
+                    warnings.warn(
+                        f"CBC generating vector only supports dimension <= {len(CBC)}; falling back to Richtmyer.",
+                        RuntimeWarning,
+                    )
                 self.gen_vec_source = "RICHTMYER"
                 gen_vec = _richtmyer_generating_vector(self.dvec.max()+1)        
         elif isinstance(generating_vector, str) and generating_vector.lower() == 'richtmyer':
