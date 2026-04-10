@@ -589,14 +589,26 @@ class TestAcceptanceRejection(unittest.TestCase):
     # --- AcceptanceRejection tests ---
 
     def test_basic_shape(self):
-        """gen_samples(n=8) returns shape (8, 1)."""
-        samples = self._make_ar().gen_samples(n=8)
-        self.assertEqual(samples.shape, (8, 1))
+        """gen_samples(n=64) returns shape (64, 1)."""
+        samples = self._make_ar().gen_samples(n=64, warn=False)
+        self.assertEqual(samples.shape, (64, 1))
 
     def test_samples_in_unit_interval(self):
         """All accepted samples lie in [0, 1]."""
-        samples = self._make_ar().gen_samples(n=64)
+        samples = self._make_ar().gen_samples(n=256, warn=False)
         self.assertTrue((samples >= 0).all() and (samples <= 1).all())
+
+    def test_mean_convergence(self):
+        """Sample mean should be close to the true mean of 2/3."""
+        samples = self._make_ar().gen_samples(n=1024, warn=False)
+        self.assertAlmostEqual(samples.mean(), 2/3, delta=0.05)
+
+    def test_return_weights(self):
+        """return_weights=True gives samples and positive weights of correct shape."""
+        s, w = self._make_ar().gen_samples(n=64, return_weights=True, warn=False)
+        self.assertEqual(s.shape, (64, 1))
+        self.assertEqual(w.shape, (64,))
+        self.assertTrue(np.all(w > 0))
 
     def test_continued_sampling_matches_single_call(self):
         """Two batches via n_min/n_max equal one single call."""
@@ -618,11 +630,16 @@ class TestAcceptanceRejection(unittest.TestCase):
         s2 = m.gen_samples(n=8)
         np.testing.assert_array_equal(s1, s2)
 
+    def test_n_max_without_n_min(self):
+        """Calling with only n_max (no n_min) works and returns correct shape."""
+        s = self._make_ar().gen_samples(n_max=64, warn=False)
+        self.assertEqual(s.shape, (64, 1))
+
     def test_error_n_min_without_prior_call(self):
         """n_min > 0 without a prior call raises ParameterError."""
         m = self._make_ar()
         with self.assertRaises(ParameterError):
-            m.gen_samples(n_min=8, n_max=16)
+            m.gen_samples(n_min=4, n_max=8)
 
     def test_error_invalid_upper_bound(self):
         """upper_bound <= 0 raises ParameterError."""
@@ -651,9 +668,15 @@ class TestAcceptanceRejection(unittest.TestCase):
     # --- AcceptanceRejectionReal tests ---
 
     def test_real_basic_shape(self):
-        """AcceptanceRejectionReal gen_samples(n=8) returns shape (8, 1)."""
-        samples = self._make_ar_real().gen_samples(n=8)
-        self.assertEqual(samples.shape, (8, 1))
+        """AcceptanceRejectionReal gen_samples(n=64) returns shape (64, 1)."""
+        samples = self._make_ar_real().gen_samples(n=64, warn=False)
+        self.assertEqual(samples.shape, (64, 1))
+
+    def test_real_mean_and_std(self):
+        """Sample mean and std should be close to N(0,1) values."""
+        samples = self._make_ar_real().gen_samples(n=512, warn=False)
+        self.assertAlmostEqual(samples.mean(), 0.0, delta=0.1)
+        self.assertAlmostEqual(samples.std(), 1.0, delta=0.1)
 
     def test_real_continued_sampling_shapes(self):
         """AcceptanceRejectionReal continued sampling returns correct shapes."""
