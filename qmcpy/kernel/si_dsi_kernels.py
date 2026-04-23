@@ -1,12 +1,11 @@
 from .abstract_kernel import AbstractKernelScaleLengthscales
 from ..util.transforms import tf_exp_eps, tf_exp_eps_inv, tf_identity
 from ..util.shift_invar_ops import BERNOULLIPOLYSDICT, bernoulli_poly
-from ..util.transforms import tf_identity, tf_exp_eps, tf_exp_eps_inv
 from ..util.dig_shift_invar_ops import (
     to_bin,
-    weighted_walsh_funcs,
     bin_from_numpy_to_torch,
     to_float,
+    weighted_walsh_funcs
 )
 from ..util import ParameterError
 import numpy as np
@@ -285,7 +284,7 @@ class KernelShiftInvar(AbstractSIDSIKernel):
         scale=1.0,
         lengthscales=None,
         alpha=2,
-        shape_scale=[1],
+        shape_scale=None,
         shape_lengthscales=None,
         tfs_scale=(tf_exp_eps_inv, tf_exp_eps),
         tfs_lengthscales=(tf_exp_eps_inv, tf_exp_eps),
@@ -294,7 +293,7 @@ class KernelShiftInvar(AbstractSIDSIKernel):
         requires_grad_lengthscales=True,
         device="cpu",
         compile_call=False,
-        comiple_call_kwargs={},
+        comiple_call_kwargs=None,
     ):
         r"""
         Args:
@@ -313,6 +312,10 @@ class KernelShiftInvar(AbstractSIDSIKernel):
             compile_call (bool): If `True`, `torch.compile` the `parsed___call__` method.
             comiple_call_kwargs (dict): When `compile_call` is `True`, pass these keyword arguments to `torch.compile`.
         """
+        if shape_scale is None:
+            shape_scale = [1]
+        if comiple_call_kwargs is None:
+            comiple_call_kwargs = {}
         super().__init__(
             d=d,
             scale=scale,
@@ -468,7 +471,7 @@ class KernelShiftInvarCombined(AbstractSIDSIKernel):
         scale=1.0,
         lengthscales=None,
         alpha=1,
-        shape_scale=[1],
+        shape_scale=None,
         shape_lengthscales=None,
         shape_alpha=None,
         tfs_scale=(tf_exp_eps_inv, tf_exp_eps),
@@ -480,7 +483,7 @@ class KernelShiftInvarCombined(AbstractSIDSIKernel):
         requires_grad_alpha=True,
         device="cpu",
         compile_call=False,
-        comiple_call_kwargs={},
+        comiple_call_kwargs=None,
     ):
         r"""
         Args:
@@ -502,6 +505,10 @@ class KernelShiftInvarCombined(AbstractSIDSIKernel):
             compile_call (bool): If `True`, `torch.compile` the `parsed___call__` method.
             comiple_call_kwargs (dict): When `compile_call` is `True`, pass these keyword arguments to `torch.compile`.
         """
+        if shape_scale is None:
+            shape_scale = [1]
+        if comiple_call_kwargs is None:
+            comiple_call_kwargs = {}
         super().__init__(
             d=d,
             scale=scale,
@@ -700,7 +707,7 @@ class KernelDigShiftInvar(AbstractSIDSIKernel):
         scale=1.0,
         lengthscales=None,
         alpha=2,
-        shape_scale=[1],
+        shape_scale=None,
         shape_lengthscales=None,
         tfs_scale=(tf_exp_eps_inv, tf_exp_eps),
         tfs_lengthscales=(tf_exp_eps_inv, tf_exp_eps),
@@ -709,7 +716,7 @@ class KernelDigShiftInvar(AbstractSIDSIKernel):
         requires_grad_lengthscales=True,
         device="cpu",
         compile_call=False,
-        comiple_call_kwargs={},
+        comiple_call_kwargs=None,
     ):
         r"""
         Args:
@@ -729,6 +736,10 @@ class KernelDigShiftInvar(AbstractSIDSIKernel):
             compile_call (bool): If `True`, `torch.compile` the `parsed___call__` method.
             comiple_call_kwargs (dict): When `compile_call` is `True`, pass these keyword arguments to `torch.compile`.
         """
+        if shape_scale is None:
+            shape_scale = [1]
+        if comiple_call_kwargs is None:
+            comiple_call_kwargs = {}
         super().__init__(
             d=d,
             scale=scale,
@@ -936,7 +947,7 @@ class KernelDigShiftInvarAdaptiveAlpha(AbstractSIDSIKernel):
         scale=1.0,
         lengthscales=None,
         alpha=1,
-        shape_scale=[1],
+        shape_scale=None,
         shape_lengthscales=None,
         shape_alpha=None,
         tfs_scale=(tf_exp_eps_inv, tf_exp_eps),
@@ -948,7 +959,7 @@ class KernelDigShiftInvarAdaptiveAlpha(AbstractSIDSIKernel):
         requires_grad_alpha=True,
         device="cpu",
         compile_call=False,
-        comiple_call_kwargs={},
+        comiple_call_kwargs=None,
     ):
         r"""
         Args:
@@ -971,6 +982,10 @@ class KernelDigShiftInvarAdaptiveAlpha(AbstractSIDSIKernel):
             compile_call (bool): If `True`, `torch.compile` the `parsed___call__` method.
             comiple_call_kwargs (dict): When `compile_call` is `True`, pass these keyword arguments to `torch.compile`.
         """
+        if shape_scale is None:
+            shape_scale = [1]
+        if comiple_call_kwargs is None:
+            comiple_call_kwargs = {}
         super().__init__(
             d=d,
             scale=scale,
@@ -1147,7 +1162,7 @@ class KernelDigShiftInvarCombined(AbstractSIDSIKernel):
         scale=1.0,
         lengthscales=None,
         alpha=1.0,
-        shape_scale=[1],
+        shape_scale=None,
         shape_lengthscales=None,
         shape_alpha=None,
         tfs_scale=(tf_exp_eps_inv, tf_exp_eps),
@@ -1159,7 +1174,7 @@ class KernelDigShiftInvarCombined(AbstractSIDSIKernel):
         requires_grad_alpha=True,
         device="cpu",
         compile_call=False,
-        comiple_call_kwargs={},
+        comiple_call_kwargs=None,
     ):
         r"""
         Args:
@@ -1181,6 +1196,10 @@ class KernelDigShiftInvarCombined(AbstractSIDSIKernel):
             compile_call (bool): If `True`, `torch.compile` the `parsed___call__` method.
             comiple_call_kwargs (dict): When `compile_call` is `True`, pass these keyword arguments to `torch.compile`.
         """
+        if shape_scale is None:
+            shape_scale = [1]
+        if comiple_call_kwargs is None:
+            comiple_call_kwargs = {}
         super().__init__(
             d=d,
             scale=scale,
