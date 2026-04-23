@@ -52,11 +52,11 @@ class AbstractSIDSIKernel(AbstractKernelScaleLengthscales):
                 raise ValueError("shape_weights is an alias for shape_lengthscales, so leave shape_lengthscales=None if passing in shape_weights")
             shape_lengthscales = shape_weights
         if tfs_weights is not None: 
-            if tfs_lengthscales is None:
+            if tfs_lengthscales is not None:
                 raise ValueError("tfs_weights is an alias for tfs_lengthscales, so leave tfs_lengthscales=None if passing in tfs_weights")
             tfs_lengthscales = tfs_weights
         if requires_grad_weights is not None: 
-            if requires_grad_lengthscales is None:
+            if requires_grad_lengthscales is not None:
                 raise ValueError("requires_grad_weights is an alias for requires_grad_lengthscales, so leave requires_grad_lengthscales=None if passing in requires_grad_weights")
             requires_grad_lengthscales = requires_grad_weights
         # default requires_grad values 
