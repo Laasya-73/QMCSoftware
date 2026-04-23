@@ -55,6 +55,13 @@ class AbstractSIDSIKernel(AbstractKernelScaleLengthscales):
         if requires_grad_weights is not None: 
             assert requires_grad_lengthscales is None, "requires_grad_weights is an alias for requires_grad_lengthscales, so leave requires_grad_lengthscales=None if passing in requires_grad_weights"
             requires_grad_lengthscales = requires_grad_weights
+        # default requires_grad values 
+        if requires_grad_alpha is None: 
+            requires_grad_alpha = True
+        if requires_grad_scale is None: 
+            requires_grad_scale = True
+        if requires_grad_lengthscales is None: 
+            requires_grad_lengthscales = True
         # default lengthscales and check if None
         input_lengthscales_is_none = lengthscales is None
         # default transforms 
@@ -314,8 +321,8 @@ class KernelShiftInvar(AbstractSIDSIKernel):
         tfs_scale=None,
         tfs_lengthscales=None,
         torchify=False,
-        requires_grad_scale=True,
-        requires_grad_lengthscales=True,
+        requires_grad_scale=None,
+        requires_grad_lengthscales=None,
         device="cpu",
         compile_call=False,
         comiple_call_kwargs=None,
@@ -515,9 +522,9 @@ class KernelShiftInvarCombined(AbstractSIDSIKernel):
         tfs_lengthscales=None,
         tfs_alpha=None,
         torchify=False,
-        requires_grad_scale=True,
-        requires_grad_lengthscales=True,
-        requires_grad_alpha=True,
+        requires_grad_scale=None,
+        requires_grad_lengthscales=None,
+        requires_grad_alpha=None,
         device="cpu",
         compile_call=False,
         comiple_call_kwargs=None,
@@ -761,8 +768,8 @@ class KernelDigShiftInvar(AbstractSIDSIKernel):
         tfs_scale=None,
         tfs_lengthscales=None,
         torchify=False,
-        requires_grad_scale=True,
-        requires_grad_lengthscales=True,
+        requires_grad_scale=None,
+        requires_grad_lengthscales=None,
         device="cpu",
         compile_call=False,
         comiple_call_kwargs=None,
@@ -1015,9 +1022,9 @@ class KernelDigShiftInvarAdaptiveAlpha(AbstractSIDSIKernel):
         tfs_lengthscales=None,
         tfs_alpha=None,
         torchify=False,
-        requires_grad_scale=True,
-        requires_grad_lengthscales=True,
-        requires_grad_alpha=True,
+        requires_grad_scale=None,
+        requires_grad_lengthscales=None,
+        requires_grad_alpha=None,
         device="cpu",
         compile_call=False,
         comiple_call_kwargs=None,
@@ -1242,9 +1249,9 @@ class KernelDigShiftInvarCombined(AbstractSIDSIKernel):
         tfs_lengthscales=None,
         tfs_alpha=None,
         torchify=False,
-        requires_grad_scale=True,
-        requires_grad_lengthscales=True,
-        requires_grad_alpha=True,
+        requires_grad_scale=None,
+        requires_grad_lengthscales=None,
+        requires_grad_alpha=None,
         device="cpu",
         compile_call=False,
         comiple_call_kwargs=None,
