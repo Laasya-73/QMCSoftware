@@ -17,7 +17,7 @@ class KernelsTest(unittest.TestCase):
             kernel = KernelClass(
                 d = d, 
                 weights = [1/j**2 for j in range(1,d+1)])
-            with self.assertRaises(AssertionError) as ae:
+            with self.assertRaises(ValueError) as ae:
                 kernel = KernelClass(
                 d = d, 
                 lengthscales = [1/j**2 for j in range(1,d+1)],
@@ -25,7 +25,7 @@ class KernelsTest(unittest.TestCase):
             kernel = KernelClass(
                 d = d, 
                 shape_weights = [1,])
-            with self.assertRaises(AssertionError) as ae:
+            with self.assertRaises(ValueError) as ae:
                 kernel = KernelClass(
                     d = d, 
                     shape_weights = [1,],
@@ -34,7 +34,7 @@ class KernelsTest(unittest.TestCase):
                 d = d,
                 tfs_weights = (tf_exp_eps_inv, tf_exp_eps),
             )
-            with self.assertRaises(AssertionError) as ae:
+            with self.assertRaises(ValueError) as ae:
                 kernel = KernelClass(
                 d = d,
                 tfs_weights = (tf_exp_eps_inv, tf_exp_eps),
@@ -44,7 +44,7 @@ class KernelsTest(unittest.TestCase):
                 d = d, 
                 requires_grad_weights = True,
                 )
-            with self.assertRaises(AssertionError) as ae:
+            with self.assertRaises(ValueError) as ae:
                 kernel = KernelClass(
                     d = d, 
                     requires_grad_weights = True,

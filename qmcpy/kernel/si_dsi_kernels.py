@@ -44,16 +44,20 @@ class AbstractSIDSIKernel(AbstractKernelScaleLengthscales):
     ):
         # alias lengthscales with weights
         if weights is not None:
-            assert lengthscales is None, "weights is an alias for lengthscales, so leave lengthscales=None if passing in weights"
+            if lengthscales is not None:
+                raise ValueError("weights is an alias for lengthscales, so leave lengthscales=None if passing in weights")
             lengthscales = weights 
         if shape_weights is not None: 
-            assert shape_lengthscales is None, "shape_weights is an alias for shape_lengthscales, so leave shape_lengthscales=None if passing in shape_weights"
+            if shape_lengthscales is not None:
+                raise ValueError("shape_weights is an alias for shape_lengthscales, so leave shape_lengthscales=None if passing in shape_weights")
             shape_lengthscales = shape_weights
         if tfs_weights is not None: 
-            assert tfs_lengthscales is None, "tfs_weights is an alias for tfs_lengthscales, so leave tfs_lengthscales=None if passing in tfs_weights"
+            if tfs_lengthscales is None:
+                raise ValueError("tfs_weights is an alias for tfs_lengthscales, so leave tfs_lengthscales=None if passing in tfs_weights")
             tfs_lengthscales = tfs_weights
         if requires_grad_weights is not None: 
-            assert requires_grad_lengthscales is None, "requires_grad_weights is an alias for requires_grad_lengthscales, so leave requires_grad_lengthscales=None if passing in requires_grad_weights"
+            if requires_grad_lengthscales is None:
+                raise ValueError("requires_grad_weights is an alias for requires_grad_lengthscales, so leave requires_grad_lengthscales=None if passing in requires_grad_weights")
             requires_grad_lengthscales = requires_grad_weights
         # default requires_grad values 
         if requires_grad_alpha is None: 
