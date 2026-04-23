@@ -36,7 +36,7 @@ class AbstractSIDSIKernel(AbstractKernelScaleLengthscales):
         requires_grad_lengthscales,
         device,
         compile_call,
-        comiple_call_kwargs,
+        compile_call_kwargs,
         weights,
         shape_weights,
         tfs_weights,
@@ -90,7 +90,7 @@ class AbstractSIDSIKernel(AbstractKernelScaleLengthscales):
             requires_grad_lengthscales=requires_grad_lengthscales,
             device=device,
             compile_call=compile_call,
-            comiple_call_kwargs=comiple_call_kwargs,
+            compile_call_kwargs=compile_call_kwargs,
         )
         self.raw_alpha = self.parse_assign_param(
             pname="alpha",
@@ -329,7 +329,7 @@ class KernelShiftInvar(AbstractSIDSIKernel):
         requires_grad_lengthscales=None,
         device="cpu",
         compile_call=False,
-        comiple_call_kwargs=None,
+        compile_call_kwargs=None,
         weights=None,
         shape_weights=None,
         tfs_weights=None,
@@ -350,7 +350,7 @@ class KernelShiftInvar(AbstractSIDSIKernel):
             requires_grad_lengthscales (bool): If `True` and `torchify`, set `requires_grad=True` for `lengthscales`.
             device (torch.device): If `torchify`, put things onto this device.
             compile_call (bool): If `True`, `torch.compile` the `parsed___call__` method.
-            comiple_call_kwargs (dict): When `compile_call` is `True`, pass these keyword arguments to `torch.compile`.
+            compile_call_kwargs (dict): When `compile_call` is `True`, pass these keyword arguments to `torch.compile`.
             weights (Union[np.ndarray, torch.Tensor]): Alias for `lengthscales`.
             shape_weights (list): Alias for `shape_lengthscales`.
             tfs_weights (Tuple[callable,callable]): Alias for `tfs_lengthscales`.
@@ -358,8 +358,8 @@ class KernelShiftInvar(AbstractSIDSIKernel):
         """
         if shape_scale is None:
             shape_scale = [1]
-        if comiple_call_kwargs is None:
-            comiple_call_kwargs = {}
+        if compile_call_kwargs is None:
+            compile_call_kwargs = {}
         super().__init__(
             d=d,
             scale=scale,
@@ -378,7 +378,7 @@ class KernelShiftInvar(AbstractSIDSIKernel):
             requires_grad_lengthscales=requires_grad_lengthscales,
             device=device,
             compile_call=compile_call,
-            comiple_call_kwargs=comiple_call_kwargs,
+            compile_call_kwargs=compile_call_kwargs,
             weights=weights,
             shape_weights=shape_weights,
             tfs_weights=tfs_weights,
@@ -531,7 +531,7 @@ class KernelShiftInvarCombined(AbstractSIDSIKernel):
         requires_grad_alpha=None,
         device="cpu",
         compile_call=False,
-        comiple_call_kwargs=None,
+        compile_call_kwargs=None,
         weights=None,
         shape_weights=None,
         tfs_weights=None,
@@ -555,7 +555,7 @@ class KernelShiftInvarCombined(AbstractSIDSIKernel):
             requires_grad_alpha (bool): If `True` and `torchify`, set `requires_grad=True` for `alpha`.
             device (torch.device): If `torchify`, put things onto this device.
             compile_call (bool): If `True`, `torch.compile` the `parsed___call__` method.
-            comiple_call_kwargs (dict): When `compile_call` is `True`, pass these keyword arguments to `torch.compile`.
+            compile_call_kwargs (dict): When `compile_call` is `True`, pass these keyword arguments to `torch.compile`.
             weights (Union[np.ndarray, torch.Tensor]): Alias for `lengthscales`.
             shape_weights (list): Alias for `shape_lengthscales`.
             tfs_weights (Tuple[callable,callable]): Alias for `tfs_lengthscales`.
@@ -563,8 +563,8 @@ class KernelShiftInvarCombined(AbstractSIDSIKernel):
         """
         if shape_scale is None:
             shape_scale = [1]
-        if comiple_call_kwargs is None:
-            comiple_call_kwargs = {}
+        if compile_call_kwargs is None:
+            compile_call_kwargs = {}
         super().__init__(
             d=d,
             scale=scale,
@@ -583,7 +583,7 @@ class KernelShiftInvarCombined(AbstractSIDSIKernel):
             requires_grad_alpha=requires_grad_alpha,
             device=device,
             compile_call=compile_call,
-            comiple_call_kwargs=comiple_call_kwargs,
+            compile_call_kwargs=compile_call_kwargs,
             weights=weights,
             shape_weights=shape_weights,
             tfs_weights=tfs_weights,
@@ -776,7 +776,7 @@ class KernelDigShiftInvar(AbstractSIDSIKernel):
         requires_grad_lengthscales=None,
         device="cpu",
         compile_call=False,
-        comiple_call_kwargs=None,
+        compile_call_kwargs=None,
         weights=None,
         shape_weights=None,
         tfs_weights=None,
@@ -798,7 +798,7 @@ class KernelDigShiftInvar(AbstractSIDSIKernel):
             requires_grad_lengthscales (bool): If `True` and `torchify`, set `requires_grad=True` for `lengthscales`.
             device (torch.device): If `torchify`, put things onto this device.
             compile_call (bool): If `True`, `torch.compile` the `parsed___call__` method.
-            comiple_call_kwargs (dict): When `compile_call` is `True`, pass these keyword arguments to `torch.compile`.
+            compile_call_kwargs (dict): When `compile_call` is `True`, pass these keyword arguments to `torch.compile`.
             weights (Union[np.ndarray, torch.Tensor]): Alias for `lengthscales`.
             shape_weights (list): Alias for `shape_lengthscales`.
             tfs_weights (Tuple[callable,callable]): Alias for `tfs_lengthscales`.
@@ -806,8 +806,8 @@ class KernelDigShiftInvar(AbstractSIDSIKernel):
         """
         if shape_scale is None:
             shape_scale = [1]
-        if comiple_call_kwargs is None:
-            comiple_call_kwargs = {}
+        if compile_call_kwargs is None:
+            compile_call_kwargs = {}
         super().__init__(
             d=d,
             scale=scale,
@@ -826,7 +826,7 @@ class KernelDigShiftInvar(AbstractSIDSIKernel):
             requires_grad_lengthscales=requires_grad_lengthscales,
             device=device,
             compile_call=compile_call,
-            comiple_call_kwargs=comiple_call_kwargs,
+            compile_call_kwargs=compile_call_kwargs,
             weights=weights,
             shape_weights=shape_weights,
             tfs_weights=tfs_weights,
@@ -1031,7 +1031,7 @@ class KernelDigShiftInvarAdaptiveAlpha(AbstractSIDSIKernel):
         requires_grad_alpha=None,
         device="cpu",
         compile_call=False,
-        comiple_call_kwargs=None,
+        compile_call_kwargs=None,
         weights=None,
         shape_weights=None,
         tfs_weights=None,
@@ -1056,7 +1056,7 @@ class KernelDigShiftInvarAdaptiveAlpha(AbstractSIDSIKernel):
             requires_grad_alpha (bool): If `True` and `torchify`, set `requires_grad=True` for `alpha`.
             device (torch.device): If `torchify`, put things onto this device.
             compile_call (bool): If `True`, `torch.compile` the `parsed___call__` method.
-            comiple_call_kwargs (dict): When `compile_call` is `True`, pass these keyword arguments to `torch.compile`.
+            compile_call_kwargs (dict): When `compile_call` is `True`, pass these keyword arguments to `torch.compile`.
             weights (Union[np.ndarray, torch.Tensor]): Alias for `lengthscales`.
             shape_weights (list): Alias for `shape_lengthscales`.
             tfs_weights (Tuple[callable,callable]): Alias for `tfs_lengthscales`.
@@ -1064,8 +1064,8 @@ class KernelDigShiftInvarAdaptiveAlpha(AbstractSIDSIKernel):
         """
         if shape_scale is None:
             shape_scale = [1]
-        if comiple_call_kwargs is None:
-            comiple_call_kwargs = {}
+        if compile_call_kwargs is None:
+            compile_call_kwargs = {}
         super().__init__(
             d=d,
             scale=scale,
@@ -1084,7 +1084,7 @@ class KernelDigShiftInvarAdaptiveAlpha(AbstractSIDSIKernel):
             requires_grad_lengthscales=requires_grad_lengthscales,
             device=device,
             compile_call=compile_call,
-            comiple_call_kwargs=comiple_call_kwargs,
+            compile_call_kwargs=compile_call_kwargs,
             weights=weights,
             shape_weights=shape_weights,
             tfs_weights=tfs_weights,
@@ -1258,7 +1258,7 @@ class KernelDigShiftInvarCombined(AbstractSIDSIKernel):
         requires_grad_alpha=None,
         device="cpu",
         compile_call=False,
-        comiple_call_kwargs=None,
+        compile_call_kwargs=None,
         weights=None,
         shape_weights=None,
         tfs_weights=None,
@@ -1282,7 +1282,7 @@ class KernelDigShiftInvarCombined(AbstractSIDSIKernel):
             requires_grad_alpha (bool): If `True` and `torchify`, set `requires_grad=True` for `alpha`.
             device (torch.device): If `torchify`, put things onto this device.
             compile_call (bool): If `True`, `torch.compile` the `parsed___call__` method.
-            comiple_call_kwargs (dict): When `compile_call` is `True`, pass these keyword arguments to `torch.compile`.
+            compile_call_kwargs (dict): When `compile_call` is `True`, pass these keyword arguments to `torch.compile`.
             weights (Union[np.ndarray, torch.Tensor]): Alias for `lengthscales`.
             shape_weights (list): Alias for `shape_lengthscales`.
             tfs_weights (Tuple[callable,callable]): Alias for `tfs_lengthscales`.
@@ -1290,8 +1290,8 @@ class KernelDigShiftInvarCombined(AbstractSIDSIKernel):
         """
         if shape_scale is None:
             shape_scale = [1]
-        if comiple_call_kwargs is None:
-            comiple_call_kwargs = {}
+        if compile_call_kwargs is None:
+            compile_call_kwargs = {}
         super().__init__(
             d=d,
             scale=scale,
@@ -1310,7 +1310,7 @@ class KernelDigShiftInvarCombined(AbstractSIDSIKernel):
             requires_grad_lengthscales=requires_grad_lengthscales,
             device=device,
             compile_call=compile_call,
-            comiple_call_kwargs=comiple_call_kwargs,
+            compile_call_kwargs=compile_call_kwargs,
             weights=weights,
             shape_weights=shape_weights,
             tfs_weights=tfs_weights,
